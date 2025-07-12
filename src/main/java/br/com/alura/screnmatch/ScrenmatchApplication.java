@@ -2,11 +2,15 @@ package br.com.alura.screnmatch;
 
 import br.com.alura.screnmatch.model.DadosEpisodio;
 import br.com.alura.screnmatch.model.DadosSerie;
+import br.com.alura.screnmatch.model.DadosTemporada;
 import br.com.alura.screnmatch.service.ConsumoAPI;
 import br.com.alura.screnmatch.service.ConverteDados;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class ScrenmatchApplication implements CommandLineRunner {
@@ -30,5 +34,25 @@ public class ScrenmatchApplication implements CommandLineRunner {
 
 		var jsonEpisodio = consumoAPI.obterDados("http://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=31df3067");
 		DadosEpisodio episodio = conversor.obterDados(jsonEpisodio, DadosEpisodio.class);
+
+		List<DadosTemporada> temporadas = new ArrayList<>();
+
+		for (int i = 1; i < dados.totalTemporadas(); i++){
+			var jsonTemporada = consumoAPI.obterDados("http://www.omdbapi.com/?t=gilmore+girls&season=" + i + "&apikey=31df3067");
+			DadosTemporada dadosTemporada = conversor.obterDados(jsonTemporada, DadosTemporada.class);
+
+			temporadas.add(dadosTemporada);
+		}
+
+		/*
+		for avançado
+		temporadas.forEach(System.out::println);
+		 */
+
+		//for básico
+		for (int i = 0; i < temporadas.size(); i++){
+			System.out.println(temporadas.get(i));
+		}
+
 	}
 }
