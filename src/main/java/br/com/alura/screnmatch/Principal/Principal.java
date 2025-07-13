@@ -7,8 +7,10 @@ import br.com.alura.screnmatch.service.ConsumoAPI;
 import br.com.alura.screnmatch.service.ConverteDados;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
     private final String APIKEY = "&apikey=31df3067";
@@ -59,6 +61,20 @@ public class Principal {
         }*/
 
         temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.Titulo())));
+
+        List<DadosEpisodio> dadosEpisodios = temporadas.
+                stream()
+                .flatMap(t -> t.episodios().stream())
+                .collect(Collectors.toList());
+
+        System.out.println("\nTop 5 episódios");
+        dadosEpisodios
+                .stream()
+                .filter(dEps -> !dEps.Avaliacao().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DadosEpisodio::Avaliacao).reversed())
+                .limit(5)
+                .forEach(System.out::println);
+
     }
 
 }
