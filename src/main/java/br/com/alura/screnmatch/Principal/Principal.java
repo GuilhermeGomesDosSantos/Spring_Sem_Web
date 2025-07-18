@@ -74,14 +74,20 @@ public class Principal {
                 .collect(Collectors.toList());
 
         System.out.println(dadosEpisodios);
-        System.out.println("\nTop 5 episódios");
+        System.out.println("\nTop 10 episódios");
         dadosEpisodios
                 .stream()
                 .filter(dEps -> !dEps.Avaliacao().equalsIgnoreCase("N/A"))
+                .peek(dEps -> System.out.println("Primeiro filtro (N/A): " + dEps))
                 .sorted(Comparator.comparing(DadosEpisodio::Avaliacao).reversed())
-                .limit(5)
+                .peek(dEps -> System.out.println("Ordenação: " + dEps))
+                .limit(10)
+                .peek(dEps -> System.out.println("Limite: " + dEps))
+                .map(dEps -> dEps.Titulo().toUpperCase())
+                .peek(dEps -> System.out.println("Mapeamento: " + dEps))
                 .forEach(System.out::println);
 
+        /*
         List<Episodio> episodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream()
                         .map(dEps -> new Episodio(t.episodio(), dEps)))
@@ -104,6 +110,7 @@ public class Principal {
                                 ", Episódio: " + e.getTitulo() +
                                 ", Data Lançamento: " + e.getDataLancamento().format(formatador)
                 ));
+         */
     }
 
 }
