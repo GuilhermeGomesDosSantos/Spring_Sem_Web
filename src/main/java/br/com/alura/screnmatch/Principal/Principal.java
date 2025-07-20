@@ -12,10 +12,7 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -73,6 +70,7 @@ public class Principal {
                 .flatMap(t -> t.episodios().stream())
                 .collect(Collectors.toList());
 
+        /*
         System.out.println(dadosEpisodios);
         System.out.println("\nTop 10 episódios");
         dadosEpisodios
@@ -87,7 +85,8 @@ public class Principal {
                 .peek(dEps -> System.out.println("Mapeamento: " + dEps))
                 .forEach(System.out::println);
 
-        /*
+         */
+
         List<Episodio> episodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream()
                         .map(dEps -> new Episodio(t.episodio(), dEps)))
@@ -95,7 +94,34 @@ public class Principal {
 
         episodios.forEach(System.out::println);
 
+        System.out.println("Digite um trecho do título do episódio");
+        var trechoTitulo = leitura.nextLine();
 
+        Optional<Episodio> primeiroIndice = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+                .findFirst();
+
+        primeiroIndice.ifPresentOrElse(pIndice -> {
+            System.out.println("Episódio Encontrado!");
+            System.out.println("Temporada: " + pIndice.getTemporada());
+            System.out.println("Episódio: " + pIndice.getTitulo());
+        },
+                () -> {
+                    System.out.println("Episódio não encontrado!");
+                });
+
+//        primeiroIndice.ifPresent(pIndice -> System.out.println("Temporada encontrada!\n" + "Temporada: "+ pIndice.getTemporada() + "\nEpisódio: " + pIndice.getTitulo()));
+
+        /*
+        if(primeiroIndice.isPresent()){
+            System.out.println("Episódio Encontrado!");
+            System.out.println("Temporada: "+ primeiroIndice.get().getTemporada());
+        }else {
+            System.out.println("Episódio não Encontrado!");
+        }
+         */
+
+        /*
         System.out.println("A partir de qual ano você deseja ver os episódios ?");
         var ano = leitura.nextInt();
         leitura.nextLine();
