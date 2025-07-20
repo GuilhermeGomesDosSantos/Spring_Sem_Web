@@ -94,6 +94,7 @@ public class Principal {
 
         episodios.forEach(System.out::println);
 
+        /*
         System.out.println("Digite um trecho do título do episódio");
         var trechoTitulo = leitura.nextLine();
 
@@ -109,7 +110,7 @@ public class Principal {
                 () -> {
                     System.out.println("Episódio não encontrado!");
                 });
-
+*/
 //        primeiroIndice.ifPresent(pIndice -> System.out.println("Temporada encontrada!\n" + "Temporada: "+ pIndice.getTemporada() + "\nEpisódio: " + pIndice.getTitulo()));
 
         /*
@@ -137,6 +138,13 @@ public class Principal {
                                 ", Data Lançamento: " + e.getDataLancamento().format(formatador)
                 ));
          */
+
+        Map<Integer, Double> avaliacoesPorTemporada = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+//                .collect(Collectors.groupingBy(e -> e.getTemporada(), Collectors.averagingDouble(e -> e.getAvaliacao()))); // forma básica
+        .collect(Collectors.groupingBy(Episodio::getTemporada, Collectors.averagingDouble(Episodio::getAvaliacao))); // forma avançada
+
+        System.out.println(avaliacoesPorTemporada);
     }
 
 }
