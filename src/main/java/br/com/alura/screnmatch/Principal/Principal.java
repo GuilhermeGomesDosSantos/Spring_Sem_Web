@@ -145,6 +145,32 @@ public class Principal {
         .collect(Collectors.groupingBy(Episodio::getTemporada, Collectors.averagingDouble(Episodio::getAvaliacao))); // forma avançada
 
         System.out.println(avaliacoesPorTemporada);
+        var count = 1;
+        for (int i = 1; i <= avaliacoesPorTemporada.size(); i++){
+            System.out.println("Temporada: " + count++ + " - Avaliação: " + avaliacoesPorTemporada.get(i));
+        }
+
+        DoubleSummaryStatistics stc = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvaliacao));
+
+        Optional<Episodio> melhorEpisodio = episodios.stream()
+                        .filter(e -> e.getAvaliacao() == stc.getMax())
+                                .findFirst();
+
+        Optional<Episodio> piorEpisodio = episodios.stream()
+                        .filter(e -> e.getAvaliacao() == stc.getMin())
+                                .findFirst();
+        System.out.println("Média: " + stc.getAverage());
+
+        melhorEpisodio.ifPresent(best -> {
+            System.out.println("Melhor Episódio: " + best.getTitulo() + " - Temporada: " + best.getTemporada());
+        });
+
+        piorEpisodio.ifPresent(bad -> {
+            System.out.println("Pior Episódio: " + bad.getTitulo() + " = Temporada: " + bad.getTemporada());
+        });
+        System.out.println("Quantidade de episódios avaliados: " + stc.getCount());
     }
 
 }
