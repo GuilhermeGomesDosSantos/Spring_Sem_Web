@@ -22,20 +22,7 @@ public class ScrenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		System.out.println("Primeiro Projeto Spring, sem Web!");
-
-
-		/*
-		for avançado
-		temporadas.forEach(System.out::println);
-		 */
-
-		//for básico
-//		for (int i = 0; i < temporadas.size(); i++){
-//			System.out.println(temporadas.get(i));
-//		}
-
 		Principal principal = new Principal();
-		principal.exibirMenu();
+		principal.exibeMenu();
 	}
 }
