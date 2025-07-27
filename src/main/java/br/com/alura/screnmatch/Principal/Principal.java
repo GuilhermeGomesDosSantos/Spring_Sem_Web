@@ -2,10 +2,13 @@ package br.com.alura.screnmatch.Principal;
 
 import br.com.alura.screnmatch.model.DadosSerie;
 import br.com.alura.screnmatch.model.DadosTemporada;
+import br.com.alura.screnmatch.model.Serie;
 import br.com.alura.screnmatch.service.ConsumoAPI;
 import br.com.alura.screnmatch.service.ConverteDados;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 public class Principal {
 
     private Scanner leitura = new Scanner(System.in);
@@ -79,7 +82,14 @@ public class Principal {
         if (dadosSeries.size() == 0){
             System.out.println("Até o momento nenhuma série foi pesquisada!");
         } else {
-            dadosSeries.forEach(System.out::println);
+            List<Serie> series = new ArrayList<>();
+
+            series = dadosSeries.stream()
+                            .map(d -> new Serie(d))
+                                    .collect(Collectors.toList());
+            series.stream()
+                            .sorted(Comparator.comparing(Serie::getGenero))
+                                    .forEach(System.out::println);
         }
     }
 }
