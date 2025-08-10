@@ -1,17 +1,25 @@
 package br.com.alura.screnmatch.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.persistence.*;
 
 import java.util.OptionalDouble;
 
+@Entity
+@Table(name = "series")
 public class Serie {
-    String titulo;
-    Integer totalTemporadas;
-    Double avaliacao;
-    Categoria genero;
-    String atores;
-    String poster;
-    String sinopse;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
+    private String titulo;
+    private Integer totalTemporadas;
+    private Double avaliacao;
+    @Enumerated(EnumType.STRING)
+    private Categoria genero;
+    private String atores;
+    private String poster;
+    private String sinopse;
 
     public Serie(DadosSerie dadosSerie){
         this.titulo = dadosSerie.titulo();
@@ -21,6 +29,14 @@ public class Serie {
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
         this.sinopse = dadosSerie.sinopse();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {

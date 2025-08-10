@@ -82,7 +82,7 @@ public class Principal {
         if (dadosSeries.size() == 0){
             System.out.println("Até o momento nenhuma série foi pesquisada!");
         } else {
-            List<Serie> series = new ArrayList<>();
+            List<Serie> series;
 
             series = dadosSeries.stream()
                             .map(d -> new Serie(d))
