@@ -88,17 +88,9 @@ public class Principal {
     }
 
     private void listarSeriesBuscadas(){
-        if (dadosSeries.size() == 0){
-            System.out.println("Até o momento nenhuma série foi pesquisada!");
-        } else {
-            List<Serie> series;
-
-            series = dadosSeries.stream()
-                            .map(d -> new Serie(d))
-                                    .collect(Collectors.toList());
+            List<Serie> series = repositorio.findAll();
             series.stream()
                             .sorted(Comparator.comparing(Serie::getGenero))
                                     .forEach(System.out::println);
-        }
     }
 }
