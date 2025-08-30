@@ -185,8 +185,9 @@ public class Principal {
 
         System.out.println("A partir de qual avaliação ?");
         var avaliacao = leitura.nextDouble();
+        leitura.nextLine();
 
-        List<Serie> maximoTemporadasSerie = repositorio.findByTotalTemporadasLessThanEqualAndAvaliacaoGreaterThanEqual(maximoTemporadas, avaliacao);
+        List<Serie> maximoTemporadasSerie = repositorio.seriesPorTemporadaEAvaliacao(maximoTemporadas, avaliacao);
 
         maximoTemporadasSerie.forEach(mT -> System.out.println(mT.getTitulo() + " - Avaliação: " + mT.getAvaliacao()));
     }
