@@ -1,6 +1,7 @@
 package br.com.alura.screnmatch.service;
 
 import br.com.alura.screnmatch.DTO.SerieDTO;
+import br.com.alura.screnmatch.model.Serie;
 import br.com.alura.screnmatch.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,17 @@ public class SerieService {
     private SerieRepository repository;
 
     public List<SerieDTO> obterSeries(){
-        return repository.findAll().
-                stream().
-                map(s -> new SerieDTO(s.getId(), s.getTitulo(), s.getTotalTemporadas(), s.getAvaliacao(), s.getGenero(), s.getAtores(), s.getPoster(), s.getSinopse()))
+        return converteDados(repository.findAll());
+    }
+
+    public List<SerieDTO> obeterTop5Series(){
+        return converteDados(repository.findTop5ByOrderByAvaliacaoDesc());
+    }
+
+    private List<SerieDTO> converteDados(List<Serie> series){
+        return series
+                .stream()
+                .map(s -> new SerieDTO(s.getId(), s.getTitulo(), s.getTotalTemporadas(), s.getAvaliacao(), s.getGenero(), s.getAtores(), s.getPoster(), s.getSinopse()))
                 .collect(Collectors.toList());
     }
 }
