@@ -28,4 +28,9 @@ public class SerieController {
     public List<SerieDTO> obeterTop5Series(){
         return service.obeterTop5Series();
     }
+
+    @GetMapping("/lancamentos")
+    public List<SerieDTO> obterLancamento(){
+        return service.obterLancamentos();
+    }
 }
